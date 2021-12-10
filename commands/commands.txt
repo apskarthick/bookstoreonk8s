@@ -1,0 +1,25 @@
+****just to keep it handy. these commands donot follow order to configure the cluster***
+************************************************************************************************************************************************
+GCLOUD COMMANDS
+
+gcloud config set project noted-extension-333310
+gcloud beta compute ssl-certificates create bookstorecert --project=noted-extension-333310 --global --domains=cloudgke.bookstore.cloudns.nz,onprem.bookstore.cloudns.nz,bookstore.cloudns.nz
+gcloud artifacts docker images list \
+us-east1-docker.pkg.dev/noted-extension-333310/dockercoderegistry/bookstore-apache --include-tags
+gcloud compute addresses create web-static-ip --global
+aps_karthick@cloudshell:~/yaml (noted-extension-333310)$ gcloud container clusters resize hackathondemo  --num-nodes=1 --zone us-east1
+************************************************************************************************************************************************
+DOCKER COMMANDS
+
+docker tag bookstore_apache us-east1-docker.pkg.dev/noted-extension-333310/dockercoderegistry/bookstore-apache:1.6
+docker push us-east1-docker.pkg.dev/noted-extension-333310/dockercoderegistry/bookstore-apache:1.6
+docker build -t mywebapp .
+docker images
+docker build -t bookstore_apache .
+************************************************************************************************************************************************
+KUBECTL
+
+kubectl create secret generic bookstoreusers-secret --from-file=bookstoreauth
+
+
+************************************************************************************************************************************************
