@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+ <web-app xmlns="http://java.sun.com/xml/ns/j2ee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="bookstore-war" version="2.4" xsi:schemaLocation="http://java.sun.com/xml/ns/j2
+ee http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd">
+
+	<display-name>Books Management Web Application</display-name>
+
+	<context-param>
+		<param-name>jdbcURL</param-name>
+		<param-value>jdbc:mysql://${DB_HOST}:3306/bookstore</param-value>
+	</context-param>
+
+	<context-param>
+		<param-name>jdbcUsername</param-name>
+		<param-value>root</param-value>
+	</context-param>
+
+	<context-param>
+		<param-name>jdbcPassword</param-name>
+		<param-value>Rejuvene@21</param-value>
+	</context-param>
+
+  <servlet-mapping>
+   <servlet-name>default</servlet-name>
+   <url-pattern>*.js</url-pattern>
+</servlet-mapping>
+<servlet-mapping>
+   <servlet-name>default</servlet-name>
+   <url-pattern>*.css</url-pattern>
+</servlet-mapping>
+
+	<servlet>
+		<servlet-name>ControllerServlet</servlet-name>
+		<servlet-class>net.codejava.javaee.bookstore.ControllerServlet</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>ControllerServlet</servlet-name>
+		<url-pattern>/</url-pattern>
+	</servlet-mapping>
+
+	<error-page>
+		<exception-type>java.lang.Exception</exception-type>
+		<location>/Error.jsp</location>
+	</error-page>
+</web-app>
