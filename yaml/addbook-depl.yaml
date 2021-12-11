@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: bookstore-addbook
+  labels:
+    app: add-book
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: add-book
+  template:
+    metadata:
+      labels:
+        app: add-book
+    spec:
+      containers:
+      - name: addbook
+        image: gcr.io/noted-extension-333310/addbook_css:v9
+        ports:
+          - containerPort: 8080
+        readinessProbe:
+            httpGet:
+              path: /actuator/health
+              port: 8080
+            initialDelaySeconds: 30
+            periodSeconds: 15
+            failureThreshold: 3
