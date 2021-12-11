@@ -16,6 +16,11 @@ docker push us-east1-docker.pkg.dev/noted-extension-333310/dockercoderegistry/bo
 docker build -t mywebapp .
 docker images
 docker build -t bookstore_apache .
+
+docker build . -t gcr.io/noted-extension-333310/addbook_css:v9
+docker build . -t gcr.io/noted-extension-333310/getbook_css:v9
+docker build . -t gcr.io/noted-extension-333310/updatebook_css:v9
+docker build . -t gcr.io/noted-extension-333310/delbook_css:v8
 ************************************************************************************************************************************************
 KUBECTL
 
