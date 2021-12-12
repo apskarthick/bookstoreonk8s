@@ -1,0 +1,61 @@
+<html>
+<!--This example uses the default bootstrap stylesheet-->
+ <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+<!--provides a full-width container that can expand or collapse based on the size of viewport-->
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-2 col-sm-12 col-xs-12">
+            <nav id="navbar">
+                <h3>Menu</h3>
+                <!--content stacking for smaller screens-->
+                <ul class="nav nav-pills nav-stacked">
+                 <!--internal linking to the respective sections-->
+                    <a class="nav-link" href="/Bookstore" rel="internal">
+                        <li>Sign In</li>
+                    </a>
+                    <a class="nav-link" href="#What_you_should_already_know" rel="internal">
+                        <li>Help</li>
+                    </a>
+                    <a class="nav-link" href="#What_you_should_already_know" rel="internal">
+                        <li>Try this</li>
+                    </a>
+                    <a class="nav-link" href="mailto:karthick.pakkiriswamy@cognizant.com" rel="internal">
+                        <li>Report issues</li>
+                    </a>
+                 </ul>
+            </nav>
+        </div>
+        <div class="col-md-10 col-sm-12 col-xs-12">
+            <main id="main-doc">
+                <section class="main-section" id="Introduction" >
+                 <!--basic styling for the headings, better practice to do the same in a css file as the styling is same for all headers-->
+                    <h3 style = "background: blue; color: white">Bookstore Management Application</h3>
+                    <article>
+                    <p>This is the onprem version of Bookstore Management Application.
+                        </article>
+                </section>
+                <section class="main-section" id="What_you_should_already_know">
+                    <h3 style = "background: blue; color: white">Help</h3>
+                    <article>
+                        <p>After you sign in, you can do the following tasks:</p>
+<!--creating list using html-->
+                        <li>See all the books in stock</li>
+                        <li>Add a new book to the stock</li>
+                        <li>Edit the book price or other book details</li>
+                        <li>Delete the book from the Bookstore</li>
+                        </artice>
+                </section>
+                <section class="main-section" id="What_you_should_already_know">
+                    <h3 style = "background: blue; color: white">Try this one time</h3>
+                    <article>
+                        <p>Click <a href="https://gke.bookstore.cloudns.nz"> here</a> to access this application running on a Modern Infrastructure and Application Platform powered by Google Cloud!!!</p>
+<!--creating list using html-->
+
+                        </artice>
+                </section>
+            </main>
+        </div>
+    </div>
+</div>
+</html>
