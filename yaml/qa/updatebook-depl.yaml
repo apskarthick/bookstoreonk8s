@@ -16,9 +16,30 @@ spec:
     spec:
       containers:
       - name: updatebook
-        image: gcr.io/noted-extension-333310/updatebook_css:v9
+        image: gcr.io/noted-extension-333310/updatebook_css:10
         ports:
         - containerPort: 8080
+
+        env:
+         - name: MYSQL_USERNAME
+           valueFrom:
+              secretKeyRef:
+                name: mysql-secret
+                key: username
+
+         - name: MYSQL_PASSWORD
+           valueFrom:
+              secretKeyRef:
+                name: mysql-secret
+                key: password
+
+         - name: DB_HOST
+           valueFrom:
+              secretKeyRef:
+                name: mysql-secret
+                key: dbhost
+
+
         readinessProbe:
             httpGet:
               path: /actuator/health

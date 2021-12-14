@@ -2,35 +2,34 @@ apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
   name: bookstore
-
 spec:
   backend:
-    serviceName: frontend
+    serviceName: frontend-service
     servicePort: 80
   rules:
   - http:
       paths:
       - path: /listallbooks
         backend:
-          serviceName: get-books
+          serviceName: listbook-service
           servicePort: 80
 
       - path: /addnewbook
         backend:
-          serviceName: add-books
+          serviceName: addbook-service
           servicePort: 80
         
       - path: /showupdateform
         backend:
-          serviceName: update-books
+          serviceName: updatebook-service
           servicePort: 80
       
       - path: /updatebook/*
         backend:
-         serviceName: update-books
+         serviceName: updatebook-service
          servicePort: 80
 
       - path: /deletebook/*
         backend:
-          serviceName: del-books
+          serviceName: deletebook-service
           servicePort: 80
