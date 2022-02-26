@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: addbook
-        image: gcr.io/noted-extension-333310/addbook:add-book-463cce6
+        image: pkarthick83/appinframodwithgke:addbook-latest
         imagePullPolicy: IfNotPresent 
         ports:
         - containerPort: 8080

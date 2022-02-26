@@ -1,7 +1,7 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: bookstore-ingress-localhost
+  name: bookstore-ingress-gke-host
   annotations:
     kubernetes.io/ingress.class: nginx
 spec:
@@ -11,7 +11,7 @@ spec:
        port:
          number: 80
   rules:
-  -  host: localhost
+  -  host: gke.bookstore.com
      http:
       paths:
       - path: /listallbooks

@@ -16,7 +16,8 @@ spec:
     spec:
       containers:
       - name: listbook
-        image: gcr.io/noted-extension-333310/listbook:list-books-cb83a02
+        image: pkarthick83/appinframodwithgke:listbook-latest
+        imagePullPolicy: IfNotPresent
         ports:
         - containerPort: 8080
         env:

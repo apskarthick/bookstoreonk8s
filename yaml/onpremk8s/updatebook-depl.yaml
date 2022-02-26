@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: updatebook
-        image: gcr.io/noted-extension-333310/updatebook:update-books-fbfa1b6
+        image: pkarthick83/appinframodwithgke:updatebook-latest
         imagePullPolicy: IfNotPresent
         ports:
         - containerPort: 8080

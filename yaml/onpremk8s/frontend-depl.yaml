@@ -16,6 +16,7 @@ spec:
     spec:
       containers:
       - name: frontend
-        image: gcr.io/noted-extension-333310/frontend:frontend-e525af2
+        image: pkarthick83/appinframodwithgke:frontend-latest
+        imagePullPolicy: IfNotPresent
         ports:
         - containerPort: 80
