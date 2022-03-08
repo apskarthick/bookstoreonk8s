@@ -41,7 +41,8 @@ steps:
             --zone "$${ZONE}" 
 
           NS=qa
-          TARGET_ENV=qa 
+          TARGET_ENV=qa
+          YAML_FILE=listbooks-depl.yaml 
 
           #VERSION=$${BRANCH_NAME}-$${VERSION}
 
@@ -49,4 +50,4 @@ steps:
           sed -i 's|gcr.io/PROJECT_ID/listbook:.*|gcr.io/\$\${PROJECT_ID}/listbook:'$${VERSION}'|' ./list-books/kubernetes/deployments/$${TARGET_ENV}/*.yaml
           
           kubectl get ns $${NS} || kubectl create ns $${NS}
-          kubectl apply --namespace $${NS} -f kubernetes/deployments/$${TARGET_ENV}
+          kubectl apply --namespace $${NS} -f kubernetes/deployments/$${TARGET_ENV}/$${YAML_FILE}
