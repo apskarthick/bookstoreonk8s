@@ -5,7 +5,7 @@ metadata:
   labels:
     app: list-book
 spec:
-  replicas: 1
+  replicas: 3
   selector:
     matchLabels:
       app: list-book
@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: listbook
-        image: gcr.io/noted-extension-333310/listbook:test
+        image: gcr.io/PROJECT_ID/listbook:latest
         ports:
         - containerPort: 8080
 
@@ -45,4 +45,3 @@ spec:
             initialDelaySeconds: 30
             periodSeconds: 15
             failureThreshold: 3
-
