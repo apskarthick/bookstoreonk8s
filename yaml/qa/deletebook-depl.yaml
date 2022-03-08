@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: deletebook
-        image: gcr.io/noted-extension-333310/deletebook:v10
+        image: gcr.io/PROJECT_ID/deletebook:v10
         ports:
           - containerPort: 8080
 

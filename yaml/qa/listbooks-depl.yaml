@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: listbook
-        image: gcr.io/noted-extension-333310/listbook:latest
+        image: gcr.io/PROJECT_ID/listbook:latest
         ports:
         - containerPort: 8080
 

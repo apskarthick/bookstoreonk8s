@@ -1,7 +1,7 @@
 apiVersion: extensions/v1beta1 
 kind: Ingress
 metadata:
-  name: bookstore
+  name: bookstore-ingress-QA
 spec:
   backend:
     serviceName: frontend-service
