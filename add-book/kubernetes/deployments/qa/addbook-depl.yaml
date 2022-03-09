@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: addbook
-        image: gcr.io/noted-extension-333310/addbook:test
+        image: gcr.io/PROJECT_ID/addbook:test
         ports:
         - containerPort: 8080
 
