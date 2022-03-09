@@ -49,7 +49,7 @@ steps:
           #VERSION=$${BRANCH_NAME}-$${VERSION}
 
 
-          sed -i 's|gcr.io/PROJECT_ID/addbook:.*|gcr.io/'$${_PROJECT_ID}'/addbook:'$${VERSION}'|' ./add-book/kubernetes/deployments/$${TARGET_ENV}/*.yaml
+          sed -i 's|gcr.io/PROJECT_ID/addbook:.*|gcr.io/'$${PROJECT}'/addbook:'$${VERSION}'|' ./add-book/kubernetes/deployments/$${TARGET_ENV}/*.yaml
           
           kubectl get ns $${NS} || kubectl create ns $${NS}
           kubectl apply --namespace $${NS} -f ./add-book/kubernetes/deployments/$${TARGET_ENV}/$${YAML_FILE}
