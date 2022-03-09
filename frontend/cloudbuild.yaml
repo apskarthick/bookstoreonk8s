@@ -59,7 +59,7 @@ steps:
           sed -i 's|/$$USERNAME/appinframodwithgke:frontend:.*|$$USERNAME/appinframodwithgke:frontend-'$${VERSION}'|' ./frontend/kubernetes/deployments/$${TARGET_ENV}/$${YAML_FILE}
           
           kubectl get ns $${NS} || kubectl create ns $${NS}
-          kubectl apply --namespace $${NS} -f kubernetes/deployments/$${TARGET_ENV}/$${YAML_FILE}
+          kubectl apply --namespace $${NS} -f ./frontend/kubernetes/deployments/$${TARGET_ENV}/$${YAML_FILE}
 availableSecrets:
   secretManager:
   - versionName: projects/$PROJECT_ID/secrets/docker-password/versions/1
