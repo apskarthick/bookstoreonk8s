@@ -1,24 +1,24 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: bookstore-addbook
+  name: bookstore-deletebook
   labels:
-    app: add-book
+    app: delete-book
 spec:
-  replicas: 3
+  replicas: 3 
   selector:
     matchLabels:
-      app: add-book
+      app: delete-book
   template:
     metadata:
       labels:
-        app: add-book
+        app: delete-book
     spec:
       containers:
-      - name: addbook
-        image: gcr.io/noted-extension-333310/addbook:latest
+      - name: deletebook
+        image: pkarthick83/appinframodwithgke:deletebook-latest
         ports:
-        - containerPort: 8080
+          - containerPort: 8080
 
         env:
          - name: MYSQL_USERNAME
@@ -38,9 +38,10 @@ spec:
               secretKeyRef:
                 name: mysql-secret
                 key: dbhost
+          
         readinessProbe:
             httpGet:
-              path: /actuator/health
+              path: /health
               port: 8080
             initialDelaySeconds: 30
             periodSeconds: 15
