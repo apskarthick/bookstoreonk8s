@@ -20,14 +20,16 @@ resource "google_project_service" "svc2" {
   project = var.project
   role = "roles/iap.httpsResourceAccessor"
   member = "user:aps.karthick@gmail.com"
-
+depends_on=[
+      google_project_service.svc3
+  ]
 }
 
- resource "google_iap_web_iam_member" "member2" {
+resource "google_iap_web_iam_member" "member2" {
   project = var.project
   role = "roles/iap.httpsResourceAccessor"
-  member = "user:testuser@gmail.com"
-  depends_on=[
+  member = "user:testuserm@gmail.com"
+depends_on=[
       google_project_service.svc3
   ]
 }
