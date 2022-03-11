@@ -153,7 +153,7 @@ command = "sleep 30;gcloud config set project ${var.project};gcloud sql import s
 resource "null_resource" "gkesetup_yaml" {
 depends_on = [google_sql_database_instance.mtr]
 provisioner "local-exec" {
-command = "sleep 30;gcloud config set project ${var.project}; gcloud container clusters get-credentials ${var.clsname} --region ${var.region} --project ${var.project}; rm -rf bookstoreonk8s; git clone https://github.com/apskarthick/bookstoreonk8s.git; sed -i 's/DBHOST/'${google_sql_database_instance.mtr.ip_address.0.ip_address}'/g' bookstoreonk8s/yaml/prod/db-secret.yaml; sed -i 's/REPLACETHIS/uniqpass-'${random_integer.rs.id}'/g' bookstoreonk8s/yaml/prod/db-secret.yaml; sed -i 's/DBUSER/'${var.dbusername}'/g' bookstoreonk8s/yaml/prod/db-secret.yaml; kubectl create ns prod; kubectl apply -f bookstoreonk8s/yaml/prod/ -n prod; kubectl get ingress -n prod;"
+command = "sleep 30;gcloud config set project ${var.project}; gcloud container clusters get-credentials ${var.clsname} --region ${var.region} --project ${var.project}; cd /tmp ; rm -rf bookstoreonk8s; git clone https://github.com/apskarthick/bookstoreonk8s.git; sed -i 's/DBHOST/'${google_sql_database_instance.mtr.ip_address.0.ip_address}'/g' bookstoreonk8s/yaml/prod/db-secret.yaml; sed -i 's/REPLACETHIS/uniqpass-'${random_integer.rs.id}'/g' bookstoreonk8s/yaml/prod/db-secret.yaml; sed -i 's/DBUSER/'${var.dbusername}'/g' bookstoreonk8s/yaml/prod/db-secret.yaml; kubectl create ns prod; kubectl apply -f bookstoreonk8s/yaml/prod/ -n prod; kubectl get ingress -n prod;"
 }
 
 }
