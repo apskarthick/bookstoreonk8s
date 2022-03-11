@@ -35,6 +35,21 @@ ip_allocation_policy {
 
 }
 
+resource "google_compute_global_address" "external_ip_address" {
+    name          = "bookstore-ip"
+    description    = "Public IP for gke.bookstore.cloudns.nz"
+    address_type = "EXTERNAL"
+    depends_on = [
+  google_project_service.svc3
+]
+}
+
+output "bookstore-ip" {
+
+value = google_compute_global_address.external_ip_address.address
+
+}
+
 resource "google_container_node_pool" "primary_nodes" {
   name       = var.nodepool
   location   = var.region
@@ -117,7 +132,7 @@ resource "random_integer" "rs" {
 }
 
 resource "google_sql_user" "users" {
-  name     = "root"
+  name     = var.dbusername
   instance = google_sql_database_instance.mtr.name
   
   password = "uniqpass-${random_integer.rs.id}"
@@ -125,21 +140,20 @@ resource "google_sql_user" "users" {
 
 
 resource "google_sql_database" "database" {
-name     = "Bookstore"
+name     = var.dbname
 instance = google_sql_database_instance.mtr.name
 depends_on = [google_sql_database_instance.mtr]
 provisioner "local-exec" {
 
-command = "sleep 30;gcloud config set project ${var.project};gcloud sql import sql ${google_sql_database_instance.mtr.name} gs://bucket-vm-images-2022/book.sql --database=Bookstore;"
+command = "sleep 30;gcloud config set project ${var.project};gcloud sql import sql ${google_sql_database_instance.mtr.name} gs://bucket-vm-images-2022/book.sql --database=${var.dbname};"
 
 }
 }
 
-
-resource "null_resource" "gke_yaml" {
+resource "null_resource" "gkesetup_yaml" {
 depends_on = [google_sql_database_instance.mtr]
 provisioner "local-exec" {
-command = "sleep 30;gcloud config set project ${var.project}; kubectl create ns prod; kubectl apply -f bookstore-springboot/yamlfiles/completepackage/ -n prod; kubectl get ingress -n prod"
+command = "sleep 30;gcloud config set project ${var.project}; gcloud container clusters get-credentials ${var.clsname} --region ${var.region} --project ${var.project}; rm -rf bookstoreonk8s; git clone https://github.com/apskarthick/bookstoreonk8s.git; sed -i 's/DBHOST/'${google_sql_database_instance.mtr.ip_address.0.ip_address}'/g' bookstoreonk8s/yaml/prod/db-secret.yaml; sed -i 's/REPLACETHIS/uniqpass-'${random_integer.rs.id}'/g' bookstoreonk8s/yaml/prod/db-secret.yaml; sed -i 's/DBUSER/'${var.dbusername}'/g' bookstoreonk8s/yaml/prod/db-secret.yaml; kubectl create ns prod; kubectl apply -f bookstoreonk8s/yaml/prod/ -n prod; kubectl get ingress -n prod;"
 }
 
 }
