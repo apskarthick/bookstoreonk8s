@@ -5,7 +5,7 @@ metadata:
   labels:
     app: update-book
 spec:
-  replicas: 3
+  replicas: 3 
   selector:
     matchLabels:
       app: update-book
@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: updatebook
-        image: gcr.io/PROJECT_ID/updatebook:latest
+        image: pkarthick83/appinframodwithgke:updatebook-latest
         ports:
         - containerPort: 8080
 

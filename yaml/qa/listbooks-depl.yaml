@@ -5,7 +5,7 @@ metadata:
   labels:
     app: list-book
 spec:
-  replicas: 3
+  replicas: 3 
   selector:
     matchLabels:
       app: list-book
@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: listbook
-        image: gcr.io/PROJECT_ID/listbook:latest
+        image: pkarthick83/appinframodwithgke:listbook-latest
         ports:
         - containerPort: 8080
 

@@ -5,7 +5,7 @@ metadata:
   labels:
     app: frontend
 spec:
-  replicas: 3
+  replicas: 3 
   selector:
     matchLabels:
       app: frontend
@@ -16,6 +16,6 @@ spec:
     spec:
       containers:
       - name: frontend
-        image: gcr.io/PROJECT_ID/frontend:latest
+        image: pkarthick83/appinframodwithgke:frontend-latest
         ports:
         - containerPort: 80
