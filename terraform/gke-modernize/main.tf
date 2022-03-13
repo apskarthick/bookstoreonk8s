@@ -35,8 +35,8 @@ ip_allocation_policy {
 
 }
 
-resource "google_compute_global_address" "external_ip_address" {
-    name          = "bookstore-ip"
+resource "google_compute_global_address" "bookstore_prod_ip_address" {
+    name          = "bookstore-prod-ip"
     description    = "Public IP for gke.bookstore.cloudns.nz"
     address_type = "EXTERNAL"
     depends_on = [
@@ -44,9 +44,9 @@ resource "google_compute_global_address" "external_ip_address" {
 ]
 }
 
-output "bookstore-ip" {
+output "bookstore_prod_ip_address" {
 
-value = google_compute_global_address.external_ip_address.address
+value = google_compute_global_address.bookstore_prod_ip_address.address
 
 }
 

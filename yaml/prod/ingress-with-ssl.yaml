@@ -3,7 +3,7 @@ kind: Ingress
 metadata:
   name: bookstore
   annotations:
-    kubernetes.io/ingress.global-static-ip-name: "bookstore-ip"
+    kubernetes.io/ingress.global-static-ip-name: "bookstore-prod-ip"
     kubernetes.io/ingress.class: gce
     networking.gke.io/managed-certificates: frontend-ingress-ssl-cert
 spec:
