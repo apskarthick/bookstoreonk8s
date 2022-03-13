@@ -56,7 +56,7 @@ steps:
 
 
           #sed -i 's|gcr.io/PROJECT_ID/frontend:.*|gcr.io/'$${_PROJECT_ID}'/frontend:'$${VERSION}'|' ./frontend/kubernetes/deployments/$${TARGET_ENV}/*.yaml
-          sed -i 's|/$$USERNAME/appinframodwithgke:frontend-BUILDVERSION|$$USERNAME/appinframodwithgke:frontend-'$${VERSION}'|' ./frontend/kubernetes/deployments/$${TARGET_ENV}/$${YAML_FILE}
+          sed  's/'$USERNAME'\/appinframodwithgke:frontend-BUILDVERSION/'$USERNAME'\/appinframodwithgke:frontend-'${VERSION}'/' ./frontend/kubernetes/deployments/$${TARGET_ENV}/$${YAML_FILE}
           
           kubectl get ns $${NS} || kubectl create ns $${NS}
           kubectl apply --namespace $${NS} -f ./frontend/kubernetes/deployments/$${TARGET_ENV}/$${YAML_FILE}
