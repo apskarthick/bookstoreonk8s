@@ -37,7 +37,7 @@
 </nav>
 
 <div class="content">
-Books Management Application Demo - Running on Google Kubernetes Engine
+Books Management Application Demo - Running on Google Kubernetes Engine QA
 </div>
 
  <div class="content2">
