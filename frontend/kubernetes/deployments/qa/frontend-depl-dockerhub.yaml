@@ -16,6 +16,6 @@ spec:
     spec:
       containers:
       - name: frontend
-        image: pkarthick83/appinframodwithgke/frontend:latest
+        image: pkarthick83/appinframodwithgke:frontend-BUILDVERSION
         ports: 
          - containerPort: 80
