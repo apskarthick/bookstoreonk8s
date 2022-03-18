@@ -1,4 +1,4 @@
-# Modern Application architecture
+# Modern Application Architecture
 
 This is modernized version of Bookstore application. We have further documented required steps in the [overview](#overview) section to provision this architecture on your own GCP project.
 
