@@ -2,6 +2,7 @@
 
 This is the modernized version of Bookstore demo application. We have further documented required steps in the [overview](#overview) section to provision this architecture on your own GCP project.
 
+
 Below individuals are the contributors of this prototype to modernize a fictional monolith app by leveraging Google Cloud Services including GKE and Cloud Build.
 
 - Karthick Pakkiriswamy
