@@ -1,6 +1,6 @@
 # Modern Application Architecture
 
-This is modernized version of Bookstore application. We have further documented required steps in the [overview](#overview) section to provision this architecture on your own GCP project.
+This is the modernized version of Bookstore demo application. We have further documented required steps in the [overview](#overview) section to provision this architecture on your own GCP project.
 
 Below individuals are the contributors of this prototype to modernize a fictional monolith app by leveraging Google Cloud Services including GKE and Cloud Build.
 
@@ -130,6 +130,8 @@ This Terraform code will:
 
 At the end of `terraform apply`, we need to wait for 60 minutes (DNS refresh takes time) to have a working cluster with application running on it
 
+For more information on the application functionality ,refer to Appendix B at the bottom of this document.
+
 ## Configure IAP and DNS
 
 For [Identity aware proxy (IAP)](https://cloud.google.com/iap/docs/enabling-kubernetes-howto)  , please follow google documentation. Please follow the setps only upto my-secret creation, further steps have been taken care while [Configure GKE cluster and deploy code](#Configure-GKE-cluster-and-deploy-code) execution prod setup section.
@@ -173,6 +175,10 @@ please connect to this DB by running below command
 Your GCP project needs to be configured properly in order to use this example. This is necessary to allow Cloud Build
 to access resources such as the GKE cluster.
 
+Please refer Appendix D for more information about github repository details.
+
+1. Please clone repository 'https://github.com/apskarthick/bookstoreonk8s.git' to your own github account and start following steps
+
 1. If you haven't already done so, ensure the [Cloud Build API is enabled](https://console.cloud.google.com/flows/enableapi?apiid=cloudbuild.googleapis.com) in your GCP project.
    - Alternatively you may run: `gcloud services enable cloudbuild.googleapis.com --project=$PROJECT`
 1. Next you will need connect git repository from cloud build
@@ -189,12 +195,14 @@ to access resources such as the GKE cluster.
 1. If you haven't already, clone this repo:
    - `$ git clone https://github.com/arnabgcp/BookStore.git`
 1. Make sure you are in the `gke-modernize` example folder:
-   - `$ cd BookStore/gke-modernize`
+   - `$ cd BookStore/cloud-build`
 1. please change below default fields of variables.tf file according to your setup
 
    - project (should be GCP exisitng project where cluster needs to be provisioned)
    - clsname (kubernetes cluster name of your choice)
    - region (region of your choice for eg: us-central1)
+   - owner (your github username)
+   - branch (your github branch name)
    
 1. Initialize terraform:
    - `$ terraform init`
@@ -203,25 +211,21 @@ to access resources such as the GKE cluster.
 1. Apply the terraform code:
    - `$ terraform apply`
 
-For more information on the Cloud Build service account, refer to Appendix A at the bottom of this document.
+For more information on the Cloud Build service account, refer to Appendix E at the bottom of this document.
 
 
 ## Triggering a Build
 
-To trigger a build we need to commit and push some changes to the Cloud Source Repository. For the purposes of this
-example, we have prepared a [sample GitHub repository](https://github.com/gruntwork-io/sample-app-docker) with a
-basic application. We recommend you clone this repository and push it to the Cloud Source Repository that was created
-in the previous step.
+To trigger a build we need to commit and push some changes to the Github Repository. 
 
-1. Clone the `sample-app-docker` repo to an empty directory outside of this example:
-   - `$ git clone https://github.com/gruntwork-io/sample-app-docker.git`
-1. Add the the Cloud Source Repository as a remote:
-   - `$ git remote google ssh://[EMAIL]@source.developers.google.com:2022/p/[PROJECT_ID]/r/[REPO_NAME]`
-   - **Note:** Be sure to replace the [EMAIL] (Google IAM user's address), [PROJECT_ID] and [REPO_NAME] with your values.
+1. Clone your github repo to an empty directory where you checked in our code changes and configured cloud build in the previous step like below example:
+   - `$ git clone https://github.com/apskarthick/bookstoreonk8s.git`
+1. Make changes to any source code 
 1. Push the sample app to the Cloud Source Repository
-   - `$ git push --all google`
+   - `$ git commit -m "checked in new changes"
+   - `$ git push 
 
-After you've pushed the changes to Google Source Repositories, Cloud Build will automatically trigger a new build. You
+After you've pushed the changes to Git , Cloud Build will automatically trigger a new build. You
 can view the build status directly in the [GCP console](https://console.cloud.google.com/cloud-build/builds).
 
 ![Cloud Build History](_docs/gcp-build-history.png)
@@ -232,7 +236,7 @@ Or by using the `gcloud` CLI tool:
 $ gcloud builds list --limit=5
 ```
 
-During the build Cloud Build will install the sample app's dependencies, execute the tests, build a docker image,
+During the build Cloud Build will install the Bookstore app's dependencies, execute the tests, build a docker image,
 push it to the GCR registry then create a deployment on the GKE cluster.
 
 ## Viewing the Deployment
@@ -257,7 +261,154 @@ Or by using the `kubectl` command:
    - `$ open <EXTERNAL_IP>`
    - `$ open <domain adress>`
 
-## Appendix A: Cloud Build Service Account
+## Appendix A: Validation of Kubernetes objects
+
+Once application is deployed on kubernetes cluster please validate below objects. 
+
+PODs: Pleae note those randomly generated binary numbers (for example after bookstore-addbook-******** ) and age can be different in your environment
+
+            NAME                                    READY   STATUS    RESTARTS   AGE
+            bookstore-addbook-6468488cdf-kvrfx      1/1     Running   0          3h7m
+            bookstore-addbook-6468488cdf-pn6wk      1/1     Running   0          3h7m
+            bookstore-addbook-6468488cdf-qrcm2      1/1     Running   0          3h7m
+            bookstore-deletebook-5c794f5c99-bjk76   1/1     Running   0          3h7m
+            bookstore-deletebook-5c794f5c99-n9rwm   1/1     Running   0          3h7m
+            bookstore-deletebook-5c794f5c99-pd2s2   1/1     Running   0          3h7m
+            bookstore-frontend-677745d846-5vtbz     1/1     Running   0          3h7m
+            bookstore-frontend-677745d846-bdhgg     1/1     Running   0          3h7m
+            bookstore-frontend-677745d846-r262r     1/1     Running   0          3h7m
+            bookstore-listbook-5d8f785d8-b9j2n      1/1     Running   0          3h7m
+            bookstore-listbook-5d8f785d8-dtx7v      1/1     Running   0          3h7m
+            bookstore-listbook-5d8f785d8-v8hlr      1/1     Running   0          3h7m
+            bookstore-updatebook-7cb6fc7cb7-9sjdn   1/1     Running   0          3h7m
+            bookstore-updatebook-7cb6fc7cb7-d4njk   1/1     Running   0          3h7m
+            bookstore-updatebook-7cb6fc7cb7-k47vn   1/1     Running   0          3h7m
+---------------------------------------------------------------------------------
+
+Deployments:
+
+            NAME                   READY   UP-TO-DATE   AVAILABLE   AGE
+            bookstore-addbook      3/3     3            3           3h7m
+            bookstore-deletebook   3/3     3            3           3h7m
+            bookstore-frontend     3/3     3            3           3h7m
+            bookstore-listbook     3/3     3            3           3h7m
+            bookstore-updatebook   3/3     3            3           3h7m
+
+----------------------------------------------------------------------------------
+Services: Please note the ip address ( cluster ip column *******) and mapped port (80:*****) can be different in your environment 
+
+            NAME                 TYPE       CLUSTER-IP      EXTERNAL-IP   PORT(S)        AGE
+            addbook-service      NodePort   10.96.201.99    <none>        80:32650/TCP   3h8m
+            deletebook-service   NodePort   10.96.203.161   <none>        80:31337/TCP   3h8m
+            frontend-service     NodePort   10.96.192.254   <none>        80:31736/TCP   3h8m
+            listbook-service     NodePort   10.96.205.123   <none>        80:31994/TCP   3h8m
+            updatebook-service   NodePort   10.96.206.36    <none>        80:31297/TCP   3h8m
+
+----------------------------------------------------------------------------------   
+Ingress: Please note the ip (clolumn address) adress can be differnet in your environment
+   
+            NAME                CLASS    HOSTS   ADDRESS           PORTS   AGE
+            bookstore-ingress   <none>   *       107.178.241.193   80      3h10m
+
+----------------------------------------------------------------------------------   
+Secret:
+   
+            NAME                  TYPE                                  DATA   AGE
+            mysql-secret          Opaque                                3      3h11m
+   
+   
+## Appendix B: Modern applications screens
+
+Application funcionality pages have been documented here
+
+Bookstore application Home Page:
+
+<p align="center">
+<img src="https://user-images.githubusercontent.com/95975264/158982528-7443d2e1-d3e1-4ddd-8620-359a40008803.png" alt="Bookstore home page"/>
+</p>
+
+--------------------------------------------------------------------------------------------
+
+Bookstore application Books details Page:
+
+<p align="center">
+<img src="https://user-images.githubusercontent.com/95975264/158982943-2f86aa3b-8425-4d59-bbbc-4b0d85e66dba.png" alt="List all books page"/>
+</p>
+
+--------------------------------------------------------------------------------------------
+
+Bookstore application add new book page:
+
+<p align="center">
+<img src="https://user-images.githubusercontent.com/95975264/158983582-7d688560-f21a-4d96-9e09-b6870b236db7.png" alt="add new book"/>
+</p>
+
+--------------------------------------------------------------------------------------------
+
+Bookstore application edit existing book page:
+
+<p align="center">
+<img src="https://user-images.githubusercontent.com/95975264/158984310-e30db8d1-0d63-49bc-b9a0-8552148fb19c.png" alt="edit existing book"/>
+</p>
+
+
+## Appendix C: Terraform state validation
+
+Since we are managing the entire infra structure with terraform, please check terraform state once environment is provisoned
+
+         $ terraform state list
+         data.google_compute_network.my-network
+         google_compute_global_address.bookstore_qa_ip_address
+         google_compute_global_address.private_ip_address
+         google_container_cluster.primary
+         google_container_node_pool.primary_nodes
+         google_project_service.svc1
+         google_project_service.svc2
+         google_project_service.svc3
+         google_project_service.svc4
+         google_service_networking_connection.private_vpc_connection
+         google_sql_database.qa_database
+         google_sql_database_instance.qa-db
+         google_sql_user.qa_users
+         null_resource.qa_gkesetup_yaml
+         random_integer.ri
+         random_integer.rs
+
+
+## Appendix D: Github structure descriptions
+
+Once you clone repository 'https://github.com/apskarthick/bookstoreonk8s.git' in your local directory, you can see below folders. 
+
+Please make a note only revent folder/files description added below are relevent for this modernized application, you need to ignore other folders/files
+
+- add-book: 
+     - src: source code for add book application
+     - dockerfile: docker image build file
+     - cloubuild.yaml: continuous deployment configuation file for cloud build
+- delete-book:
+     - dockerfile: docker image build file
+     - delete.py: source code 
+- list-books:
+     - src: source code for list books application
+     - dockerfile: docker image build file
+     - cloubuild.yaml: continuous deployment configuation file for cloud build
+- update-books:
+     - src: source code for update books application
+     - dockerfile: docker image build file
+     - cloubuild.yaml: continuous deployment configuation file for cloud build
+- frontend:
+     - public-html: bookstore application home page static files
+     - dockerfile: docker image build file
+     - cloubuild.yaml: continuous deployment configuation file for cloud build
+- terraform:
+     - gke-modernize-prod: production terraform code to provision the environment
+     - gke-iap: iap terraform code to grant access to users
+- yaml
+     - prod: all yaml files to be applied on kubernetes cluster during PROD setup
+     - qa: all yaml files to be applied on kubernetes cluster during QA setup
+
+
+## Appendix E: Cloud Build Service Account
 
 Cloud Build executes your builds using a service account, a special Google account that executes builds on your behalf. The email for
 the Cloud Build service account is `[PROJECT_NUMBER]@cloudbuild.gserviceaccount.com`. When you enable the Cloud Build API, the service
